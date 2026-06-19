@@ -7,15 +7,13 @@ function App() {
   const [error, setError] = useState(null);
 
   // Recuerda mantener la configuración del proxy si la estás usando
-  const API_URL = '/api-futbol/v4/competitions/WC/matches';
+  const URL = 'https://project-bqjnu.vercel.app/api/partidos'; // Esta es tu URL
 
   useEffect(() => {
     const obtenerPartidos = async () => {
       try {
-        const response = await fetch(API_URL, {
-          // Asegúrate de poner tu token real aquí
-          headers: { 'X-Auth-Token': 'ceb51703380443ca846d8be86de3ee05' } 
-        });
+        // YA NO NECESITAS LOS HEADERS NI EL TOKEN AQUÍ
+        const response = await fetch(URL); 
         
         if (!response.ok) {
           throw new Error(`Error HTTP: ${response.status}`);
@@ -26,7 +24,7 @@ function App() {
         
       } catch (err) {
         console.error("Error cargando los datos:", err);
-        setError("Hubo un problema al conectar con la API.");
+        setError("Hubo un problema al cargar los partidos.");
       } finally {
         setLoading(false);
       }
