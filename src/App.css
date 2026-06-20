@@ -27,9 +27,14 @@ body {
 /* Header Styles */
 header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
+  
 }
+.logo{
+  width: 300px;
+  border-radius: 2rem;
 
+}
 .project-tag {
   color: var(--accent);
   letter-spacing: 5px;
@@ -68,6 +73,29 @@ header h1 span {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
+}
+
+/* --- ESTILOS PARA PARTIDOS DE HOY --- */
+.today-section {
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #0b192c 0%, #1a365d 100%);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.today-section .section-title {
+  color: #fff;
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+.today-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px auto;
+  max-width: 600px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .status-message.error {
@@ -168,18 +196,39 @@ header h1 span {
   padding: 0 10px;
 }
 
-.score-box input {
-  width: 35px;
-  height: 35px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  color: white;
-  text-align: center;
-  border-radius: 6px;
-  font-weight: bold;
-  font-family: 'Space Grotesk', sans-serif;
-}
 
+/* --- ESTILOS PARA LOS RESULTADOS READ-ONLY (Sin inputs) --- */
+.score-box.read-only {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2d3748;
+}
+.score-box.read-only .separator {
+  color: #718096;
+  font-size: 1.2rem;
+}
+.team-name {
+  font-weight: 600;
+  
+  /* 1. Cambiamos 'nowrap' por 'normal' para permitir el salto de línea */
+  white-space: normal; 
+  
+  /* 2. Ajustamos el espacio entre las líneas para que no se vea tan separado */
+  line-height: 1.2; 
+  
+  /* 3. Centramos el texto (muy útil si el nombre queda en dos renglones) */
+  text-align: center; 
+  
+  /* 4. (Opcional) Le damos un ancho máximo para forzar el salto en pantallas pequeñas */
+  max-width: 90px; 
+  
+  /* 5. Asegura que palabras muy largas no rompan la caja */
+  word-wrap: break-word; 
+}
 .score-box input:focus {
   outline: none;
   border-color: var(--accent);
@@ -191,17 +240,24 @@ header h1 span {
   background: transparent;
 }
 
-/* Bracket View (Knockouts) */
+/* --- SOLUCIÓN A LAS LLAVES ELIMINATORIAS --- */
+
+/* Por defecto (Pantallas de PC grandes) */
 .bracket-view {
   display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow-x: auto; /* Permite scroll horizontal en PC si la pantalla es pequeña */
+  gap: 20px;
+  padding: 10px;
+  /* Esto asegura que la última tarjeta no se corte en monitores anchos */
+  min-width: min-content; 
 }
 
 .phase-column {
-  min-width: 280px;
+  min-width: 250px;
   display: flex;
+  flex: 1; /* Permite que las columnas se expandan de manera uniforme */
   flex-direction: column;
   gap: 1rem;
 }
@@ -237,4 +293,17 @@ header h1 span {
 
 .team-row:first-child {
   border-bottom: 1px solid var(--border);
+}
+
+/* Diseño Móvil (Vertical) */
+@media (max-width: 768px) {
+  .bracket-view {
+    flex-direction: column; /* Pone las llaves una debajo de la otra */
+    overflow-x: hidden; /* Elimina la barra de desplazamiento horizontal */
+  }
+  
+  .phase-column {
+    min-width: 100%; /* Toma todo el ancho de la pantalla del celular */
+    margin-bottom: 20px; /* Espacio entre fases */
+  }
 }

@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#Archivos no importantes en la app
+partidos.json
+link_json_partidos_vercel.txt
+actualizar.yml
+generarJson.js
