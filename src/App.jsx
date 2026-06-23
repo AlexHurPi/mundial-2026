@@ -120,6 +120,7 @@ useEffect(() => {
     //if (status === 'SCHEDULED') return 'Programado';
     if (status === 'IN_PLAY') return 'En Juego';
     if (status === 'LIVE') return 'En Juego';
+    if (status === 'PAUSED') return 'Medio tiempo';
     //if (status === 'FINISHED') return 'Finalizado';
     return null;
     
@@ -158,7 +159,7 @@ useEffect(() => {
                         <span className="match-date">{formatearFecha(match.utcDate)}</span>
 
                         {(() => { const statusText = getStatus(match.status); return statusText && (
-                            <span className={statusText==='En Juego' ? 'match-status' : 'none'}>{statusText}</span>
+                            <span className={ statusText!== null? 'match-status' : 'none'}>{statusText}</span>
                         ); })()}
                     
                     </div>
