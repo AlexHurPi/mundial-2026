@@ -109,7 +109,7 @@ export const GroupCard = ({ groupName, matches, obtenerNombreEquipo, formatearFe
                         <div className="match-details">
                             <span>{formatearFecha(match.utcDate)}</span>
                              {(() => { const statusText = getStatus(match.status); return statusText && (
-                            <span className="status">{statusText}</span>
+                            <span className={statusText==='En Juego' ? 'match-status' : 'none'}>{statusText}</span>
                         ); })()}
                             
                             {match.venue && ` • 🏟️ ${match.venue}`}                                                  
