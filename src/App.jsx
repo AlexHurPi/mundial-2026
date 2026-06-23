@@ -121,7 +121,7 @@ useEffect(() => {
     if (status === 'IN_PLAY') return 'En Juego';
     if (status === 'LIVE') return 'En Juego';
     if (status === 'PAUSED') return 'Medio tiempo';
-    //if (status === 'FINISHED') return 'Finalizado';
+    if (status === 'FINISHED') return 'Finalizado';
     return null;
     
   };
@@ -158,9 +158,26 @@ useEffect(() => {
                         )}
                         <span className="match-date">{formatearFecha(match.utcDate)}</span>
 
-                        {(() => { const statusText = getStatus(match.status); return statusText && (
-                            <span className={ statusText!== null? 'match-status' : 'none'}>{statusText}</span>
-                        ); })()}
+                        {(() => { 
+                            const statusText = getStatus(match.status); 
+                            
+                            // 3. Si es null, simplemente retornamos null y React no dibuja nada
+                            if (!statusText) return null;
+
+                            // Mapeamos el texto del estado a su clase CSS correspondiente
+                            const clasesPorEstado = {
+                              'En Juego': 'match-status',      // Condición 1
+                              'Medio tiempo': 'match-status',  // Condición 1
+                              'Finalizado': 'none'   // Condición 2
+                            };
+
+                            // Buscamos la clase. Si por alguna razón no coincide, usa 'match-status' por defecto
+                            const claseAplicada = clasesPorEstado[statusText] || 'match-status';
+
+                            return (
+                              <span className={claseAplicada}>{statusText}</span>
+                            ); 
+                        })()}
                     
                     </div>
                   {/*{formatearFecha(match.utcDate)} {match.venue && ` • 🏟️ ${match.venue}`}*/}
