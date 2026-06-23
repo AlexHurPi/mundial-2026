@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { diccionarioEquipos } from './diccionario.js';
 import { nombresFases } from './diccionario.js';
 import { GroupCard }  from './components/GroupCard.jsx';
+import { AnuncioAdsense } from './components/AnuncioAdsense.jsx';
 import './App.css';
 
 function App() {
@@ -150,6 +151,7 @@ useEffect(() => {
       {!loading && !error && partidosDeHoy.length > 0 && (
         <section className="today-section">
           <h2 className="section-title">Partidos de Hoy</h2>
+          <AnuncioAdsense />
           <div className="today-grid">
             {partidosDeHoy.map(match => (
               <div key={match.id} className="today-card">
