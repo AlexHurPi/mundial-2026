@@ -135,6 +135,15 @@ useEffect(() => {
     });
   };
 
+  const getStatus = (status) => {
+    //if (status === 'SCHEDULED') return 'Programado';
+    if (status === 'IN_PLAY') return 'En Juego';
+    if (status === 'PAUSED') return 'En Pausa';
+    if (status === 'FINISHED') return 'Finalizado';
+    return null;
+    
+  };
+
   const groups = getGroupMatches();
   const knockoutMatches = getKnockoutMatches();
   const partidosDeHoy = getPartidosDeHoy();
@@ -163,8 +172,14 @@ useEffect(() => {
                           <span className="match-group-badge">
                             {match.group.replace('GROUP_', 'Grupo ')}
                           </span>
+                         
                         )}
                         <span className="match-date">{formatearFecha(match.utcDate)}</span>
+
+                        {(() => { const statusText = getStatus(match.status); return statusText && (
+                            <span className="match-status">{statusText}</span>
+                        ); })()}
+                    
                     </div>
                   {/*{formatearFecha(match.utcDate)} {match.venue && ` • 🏟️ ${match.venue}`}*/}
 
@@ -200,23 +215,23 @@ useEffect(() => {
       {!loading && !error && (
         <>
 {/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
-          <section className="tournament-section">
-           {/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
+  <section className="tournament-section">          
 
-<div className="section-title">Fase de Grupos</div>
+        <div className="section-title">Fase de Grupos</div>
 
-<div className="groups-grid">
-  {Object.keys(groups).sort().map((groupName) => (
-    <GroupCard 
-      key={groupName} 
-      groupName={groupName} 
-      matches={groups[groupName]} 
-      obtenerNombreEquipo={obtenerNombreEquipo} 
-      formatearFecha={formatearFecha} 
-    />
-  ))}
-</div>
-          </section>
+        <div className="groups-grid">
+          {Object.keys(groups).sort().map((groupName) => (
+            <GroupCard 
+              key={groupName} 
+              groupName={groupName} 
+              matches={groups[groupName]} 
+              obtenerNombreEquipo={obtenerNombreEquipo} 
+              formatearFecha={formatearFecha} 
+              status={getStatus}
+            />
+          ))}
+        </div>
+  </section>
 {/* --- --------------------------------Tarjeta de Fase Eliminatoria (Llaves) ----------------------------- */}
           <section className="tournament-section">
             <h2 className="section-title">Fase Eliminatoria (Llaves)</h2>

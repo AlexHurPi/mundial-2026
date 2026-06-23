@@ -63,6 +63,14 @@ export const GroupCard = ({ groupName, matches, obtenerNombreEquipo, formatearFe
       });
   };
 
+  const getStatus = (status) => {
+    //if (status === 'SCHEDULED') return 'Programado';
+    if (status === 'IN_PLAY') return 'En Juego';
+    //if (status === 'PAUSED') return 'En Pausa';
+    //if (status === 'FINISHED') return 'Finalizado';
+    return null;
+    
+  };
   const tabla = calcularTabla();
   const nombreGrupoLimpio = groupName.replace('GROUP', 'Grupo ');
 
@@ -99,8 +107,12 @@ export const GroupCard = ({ groupName, matches, obtenerNombreEquipo, formatearFe
 {/*----------------------------------------------------------------------------------------------- */} 
                   
                         <div className="match-details">
-                            {formatearFecha(match.utcDate)}
-                            {match.venue && ` • 🏟️ ${match.venue}`}
+                            <span>{formatearFecha(match.utcDate)}</span>
+                             {(() => { const statusText = getStatus(match.status); return statusText && (
+                            <span className="status">{statusText}</span>
+                        ); })()}
+                            
+                            {match.venue && ` • 🏟️ ${match.venue}`}                                                  
                         </div>
                    
                       <div className="match-row">
