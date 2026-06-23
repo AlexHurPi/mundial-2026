@@ -1,80 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { diccionarioEquipos } from './diccionario.js';
+import { nombresFases } from './diccionario.js';
+import { GroupCard }  from './components/GroupCard.jsx';
 import './App.css';
-
-// --- NUEVO: Diccionario para traducir equipos al español ---
-// La API entrega los nombres en inglés. Aquí agregamos los más comunes.
-// Puedes agregar más países a esta lista a medida que los necesites.
-// --- NUEVO: Diccionario para traducir equipos al español ---
-const diccionarioEquipos = {
-  // Equipos extraídos exactamente como aparecen en tu archivo partidos.txt:
-  "Mexico": "México",
-  "South Africa": "Sudáfrica",
-  "Korea Republic": "Corea del Sur", 
-  "Czechia": "Republica Checa",
-  "Canada": "Canadá",
-  "Bosnia-H.": "Bosnia",
-  "USA": "EE.UU",
-  "Paraguay": "Paraguay",
-  "Qatar": "Catar",
-  "Switzerland": "Suiza",
-  "Brazil": "Brasil",
-  "Morocco": "Marruecos",
-  "Haiti": "Haití",
-  "Scotland": "Escocia",
-  "Australia": "Australia",
-  "Turkey": "Turquía",
-
-  // Otros equipos comunes para completar el Mundial (por si la API los envía):
-  "Spain": "España",
-  "Germany": "Alemania",
-  "England": "Inglaterra",
-  "France": "Francia",
-  "Japan": "Japón",
-  "Netherlands": "Países Bajos",
-  "Croatia": "Croacia",
-  "Iraq": "Irak",
-  "Algeria": "Argelia",
-  "Jordan": "Jordania",
-  "Congo DR": "RD Congo",
-  "Curaçao": "Curazao",
-  "Tunisia": "Tunez",
-  "New Zealand": "Nueva Zelanda",
-  "Cape Verde": "Cabo Verde",
-  "Argentina": "Argentina",
-  "Portugal": "Portugal",
-  "Belgium": "Bélgica",
-  "Italy": "Italia",
-  "Uruguay": "Uruguay",
-  "Colombia": "Colombia",
-  "Chile": "Chile",
-  "Peru": "Perú",
-  "Ecuador": "Ecuador",
-  "Senegal": "Senegal",
-  "Cameroon": "Camerún",
-  "Ghana": "Ghana",
-  "Nigeria": "Nigeria",
-  "Saudi Arabia": "Arabia Saudita",
-  "Iran": "Irán",
-  "Serbia": "Serbia",
-  "Poland": "Polonia",
-  "Denmark": "Dinamarca",
-  "Sweden": "Suecia",
-  "Norway": "Noruega",
-  "Wales": "Gales",
-  "Ukraine": "Ucrania",
-  "Costa Rica": "Costa Rica",
-  "Egypt": "Egipto",
-  "Ivory Coast": "Costa de Marfil"
-};
-
-// --- NUEVO: Diccionario para las fases eliminatorias ---
-const nombresFases = {
-  'LAST_32': '16avos de Final',
-  'LAST_16': 'Octavos de Final',
-  'QUARTER_FINALS': 'Cuartos de Final',
-  'SEMI_FINALS': 'Semifinal',
-  'FINAL': 'Final'
-};
 
 function App() {
   const [matches, setMatches] = useState([]);
@@ -82,9 +10,62 @@ function App() {
   const [error, setError] = useState(null);
 
   const URL = 'https://project-bqjnu.vercel.app/api/partidos'; // Esta URL es para probar en Vercel
-  // const URL = 'partidos.json'; // Esta URL es para probar en local con el archivo partidos.json
+  //const URL = 'partidos.json'; // Esta URL es para probar en local con el archivo partidos.json
 
-  useEffect(() => {
+useEffect(() => {
+    const obtenerPartidos = async () => {
+      try {
+        const response = await fetch(URL);
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        const data = await response.json();
+        setMatches(data.matches || []);
+      } catch (err) {
+        console.error("Error cargando los datos:", err);
+        setError("Hubo un problema al cargar los partidos.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // 1. Llamamos a la función la primera vez que la app "nace"
+    obtenerPartidos();
+
+    // -----------------------------------------------------------
+    // INICIA EL "VIGILANTE"
+    // -----------------------------------------------------------
+    
+    // 2. Vigilante 1: Detecta cuando el celular/pestaña vuelve a estar visible
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        console.log("La app está visible de nuevo, actualizando datos...");
+        obtenerPartidos(); // Descarga los datos de fondo
+      }
+    };
+
+    // 3. Vigilante 2: Detecta cuando haces clic de vuelta en la pestaña (en PC)
+    const handleFocus = () => {
+      console.log("La ventana recuperó el foco, actualizando datos...");
+      obtenerPartidos();
+    };
+
+    // 4. Contratamos a los vigilantes (Event Listeners)
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    // 5. Despedimos a los vigilantes cuando la app se cierra (Limpieza / Cleanup)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+    // -----------------------------------------------------------
+    // TERMINA EL "VIGILANTE"
+    // -----------------------------------------------------------
+
+  }, []); // Los corchetes vacíos aseguran que este bloque se active una sola vez
+
+  /*useEffect(() => {
     const obtenerPartidos = async () => {
       try {
         const response = await fetch(URL); 
@@ -101,7 +82,7 @@ function App() {
       }
     };
     obtenerPartidos();
-  }, []);
+  }, []);*/
 
   const formatearFecha = (fechaUtc) => {
     if (!fechaUtc) return 'Fecha por definir';
@@ -165,31 +146,46 @@ function App() {
         <p className="subtitle">Copa Mundial de Fútbol 2026</p>
       </header>
 
-      {/* --- NUEVO: Tarjeta de Partidos de Hoy --- */}
+{/* ------------------------------------------Tarjeta de Partidos de Hoy ------------------------------------------*/}
       {!loading && !error && partidosDeHoy.length > 0 && (
         <section className="today-section">
           <h2 className="section-title">Partidos de Hoy</h2>
           <div className="today-grid">
             {partidosDeHoy.map(match => (
               <div key={match.id} className="today-card">
+
                 <div className="match-details">
-                  {formatearFecha(match.utcDate)} {match.venue && ` • 🏟️ ${match.venue}`}
+                    <div className="match-header-info">
+                        {/* Validamos si hay un grupo para mostrarlo, reemplazando "GROUP_" por "Grupo " */}
+                        {match.group && (
+                          <span className="match-group-badge">
+                            {match.group.replace('GROUP_', 'Grupo ')}
+                          </span>
+                        )}
+                        <span className="match-date">{formatearFecha(match.utcDate)}</span>
+                    </div>
+                  {/*{formatearFecha(match.utcDate)} {match.venue && ` • 🏟️ ${match.venue}`}*/}
+
                 </div>
-                <div className="match-row">
-                  <div className="team">
-                    <img src={match.homeTeam?.crest} alt="crest" className="crest" />
-                    <span className="team-name">{obtenerNombreEquipo(match.homeTeam)}</span>
+                  <div className="match-row">
+                    <div className="team-today">
+                      <img src={match.homeTeam?.crest} alt="crest" className="crest" />
+                      {/* MODIFICADO: Usa el nombre traducido en lugar del TLA */}
+                      <span className="team-name">{obtenerNombreEquipo(match.homeTeam)}</span>
+                    </div>
+
+                    {/* MODIFICADO: Eliminados los <input>, ahora son simples textos (spans) */}
+                    <div className="score-box read-only">
+                      <span className="score">{match.score?.fullTime?.home ?? '-'}</span>
+                      <span className="separator">vs</span>
+                      <span className="score">{match.score?.fullTime?.away ?? '-'}</span>
+                    </div>
+
+                    <div className="team-today team-right">
+                      <span className="team-name">{obtenerNombreEquipo(match.awayTeam)}</span>
+                      <img src={match.awayTeam?.crest} alt="crest" className="crest" />
+                    </div>
                   </div>
-                  <div className="score-box read-only">
-                    <span>{match.score?.fullTime?.home ?? '-'}</span>
-                    <span className="separator">vs</span>
-                    <span>{match.score?.fullTime?.away ?? '-'}</span>
-                  </div>
-                  <div className="team team-right">
-                    <span className="team-name">{obtenerNombreEquipo(match.awayTeam)}</span>
-                    <img src={match.awayTeam?.crest} alt="crest" className="crest" />
-                  </div>
-                </div>
               </div>
             ))}
           </div>
@@ -201,49 +197,25 @@ function App() {
 
       {!loading && !error && (
         <>
-          {/* --- NUEVO: Tarjeta de Fase de Grupos --- */}
+{/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
           <section className="tournament-section">
-            <h2 className="section-title">Fase de Grupos</h2>
-            <div className="groups-grid">
-              {/* MODIFICADO: Object.keys(groups).sort() arregla el error de que el grupo D salga antes que el C */}
-              {Object.keys(groups).sort().map((groupName, index) => (
-                <div key={index} className="group-card">
-                  <h3 className="group-title">{groupName}</h3>
-                  <div className="matches-list">
-                    {groups[groupName].map(match => (
-                      <div key={match.id} className="match-wrapper">
-                        <div className="match-details">
-                          {formatearFecha(match.utcDate)}
-                          {match.venue && ` • 🏟️ ${match.venue}`}
-                        </div>
+           {/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
 
-                        <div className="match-row">
-                          <div className="team">
-                            <img src={match.homeTeam?.crest} alt="crest" className="crest" />
-                            {/* MODIFICADO: Usa el nombre traducido en lugar del TLA */}
-                            <span className="team-name">{obtenerNombreEquipo(match.homeTeam)}</span>
-                          </div>
+<div className="section-title">Fase de Grupos</div>
 
-                          {/* MODIFICADO: Eliminados los <input>, ahora son simples textos (spans) */}
-                          <div className="score-box read-only">
-                            <span className="score">{match.score?.fullTime?.home ?? '-'}</span>
-                            <span className="separator">-</span>
-                            <span className="score">{match.score?.fullTime?.away ?? '-'}</span>
-                          </div>
-
-                          <div className="team team-right">
-                            <span className="team-name">{obtenerNombreEquipo(match.awayTeam)}</span>
-                            <img src={match.awayTeam?.crest} alt="crest" className="crest" />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+<div className="groups-grid">
+  {Object.keys(groups).sort().map((groupName) => (
+    <GroupCard 
+      key={groupName} 
+      groupName={groupName} 
+      matches={groups[groupName]} 
+      obtenerNombreEquipo={obtenerNombreEquipo} 
+      formatearFecha={formatearFecha} 
+    />
+  ))}
+</div>
           </section>
-
+{/* --- --------------------------------Tarjeta de Fase Eliminatoria (Llaves) ----------------------------- */}
           <section className="tournament-section">
             <h2 className="section-title">Fase Eliminatoria (Llaves)</h2>
             <div className="bracket-view">
