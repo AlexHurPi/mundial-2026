@@ -103,7 +103,7 @@ header h1 span {
 background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 0.5rem;
 
   /*
   background: white;
