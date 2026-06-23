@@ -143,7 +143,7 @@ useEffect(() => {
     <div className="app-container">
       <header>
         <img src="logo-mundial.png" alt="Logo Mundial 2026" className="logo" />
-        <h1>Mundial <br/><span>2026⚽​</span></h1>
+        <h1>Mundial <br/><span>2026 -⚽​</span></h1>
         <p className="subtitle">Copa Mundial de Fútbol 2026</p>
       </header>
 
