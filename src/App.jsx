@@ -66,25 +66,6 @@ useEffect(() => {
 
   }, []); // Los corchetes vacíos aseguran que este bloque se active una sola vez
 
-  /*useEffect(() => {
-    const obtenerPartidos = async () => {
-      try {
-        const response = await fetch(URL); 
-        if (!response.ok) {
-          throw new Error(`Error HTTP: ${response.status}`);
-        }
-        const data = await response.json();
-        setMatches(data.matches || []); 
-      } catch (err) {
-        console.error("Error cargando los datos:", err);
-        setError("Hubo un problema al cargar los partidos.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    obtenerPartidos();
-  }, []);*/
-
   const formatearFecha = (fechaUtc) => {
     if (!fechaUtc) return 'Fecha por definir';
     const fecha = new Date(fechaUtc);
@@ -138,7 +119,7 @@ useEffect(() => {
   const getStatus = (status) => {
     //if (status === 'SCHEDULED') return 'Programado';
     if (status === 'IN_PLAY') return 'En Juego';
-    //if (status === 'PAUSED') return 'En Pausa';
+    if (status === 'LIVE') return 'En Juego';
     //if (status === 'FINISHED') return 'Finalizado';
     return null;
     
