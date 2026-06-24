@@ -342,7 +342,11 @@ header h1 span {
     width: 100%;
   }
 }
-
+@media (max-width: 400px) {
+  .team-name{
+    font-size: 0.7rem;
+   }
+}
 @media (max-width: 320px) {
   .today-section {
     display: flex;
