@@ -84,8 +84,8 @@ header h1 span {
 }
 
 .subtitle {
-  /*color: var(--text-dim);*/
-  color: var(--accent);
+  color: var(--text-dim);
+  /*color: var(--accent);*/
   font-size: 1.2rem;
   max-width: 700px;
   margin: 1.5rem auto 0;
