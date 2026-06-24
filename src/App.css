@@ -36,6 +36,10 @@ html, body, #root {
   font-family: 'Urbanist', sans-serif;
   flex: 1;  
 }
+body{
+  overflow-x: hidden;
+}
+
 
 .app-container { 
   flex: 1;
@@ -50,10 +54,7 @@ html, body, #root {
 /* Header Styles */
 header {
   text-align: center;
-  margin-bottom: 1rem;
-
-
-  
+  margin-bottom: 1rem;  
 }
 .logo{
   width: 300px;
@@ -64,8 +65,7 @@ header {
   letter-spacing: 5px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1rem;
-  margin-bottom: 1rem;
-  
+  margin-bottom: 1rem;  
 }
 
 header h1 {
@@ -75,26 +75,21 @@ header h1 {
   text-transform: uppercase;
   letter-spacing: -2px;
   margin: 0;
-  line-height: 1.1;
-  
-  
+  line-height: 1.1;  
 }
 
 header h1 span {
   color: var(--accent);
-  font-size: 3rem;
-  
-  
+  font-size: 3rem;  
 }
 
 .subtitle {
-  color: var(--text-dim);
+  /*color: var(--text-dim);*/
+  color: var(--accent);
   font-size: 1.2rem;
   max-width: 700px;
   margin: 1.5rem auto 0;
-  line-height: 1.6;
-
-  
+  line-height: 1.6;  
 }
 /* ==========================================================================================================
    4. PARTIDOS DE HOY
@@ -243,7 +238,7 @@ header h1 span {
   
   /* 5. Asegura que palabras muy largas no rompan la caja */
   word-wrap: break-word; 
- 
+  font-size: 0.9rem;
 }
 .score-box input:focus {
   outline: none;
@@ -351,21 +346,11 @@ header h1 span {
 @media (max-width: 320px) {
   .today-section {
     display: flex;
-    flex-direction: column;
-    
-   
-    
+    flex-direction: column;   
 }
-  .today-grid{
-    /*display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 0.5rem;*/
-    
-
-    
-
-   
-  }
+ .team-name{
+  font-size: 0.7rem;
+ }
   .today-card {  
     background: var(--card-bg);
     border: 1px solid var(--border);
