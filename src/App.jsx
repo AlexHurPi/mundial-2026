@@ -213,7 +213,7 @@ useEffect(() => {
 
       {!loading && !error && (
         <>
-{/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
+{/* ---------------------------------------------- FASE DE GRUPOS --------------------------------------------- */}
   <section className="groups-section">          
 
         <div className="section-title">Fase de Grupos</div>
@@ -231,9 +231,9 @@ useEffect(() => {
           ))}
         </div>
   </section>
-{/* --- --------------------------------Tarjeta de Fase Eliminatoria (Llaves) ----------------------------- */}
+{/* --- -------------------------------------------------------FINALES --------------------------------------- */}
           <section className="final-section">
-            <h2 className="section-title">Fase Eliminatoria (Llaves)</h2>
+            <h2 className="section-title">FINALES</h2>
             <div className="bracket-view">
               {['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'FINAL'].map(phase => {
                 const phaseMatches = knockoutMatches.filter(m => m.stage === phase);
