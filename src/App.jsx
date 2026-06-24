@@ -214,7 +214,7 @@ useEffect(() => {
       {!loading && !error && (
         <>
 {/* ---------------------------- NUEVO: Tarjeta de Fase de Grupos ---------------------------------- */}
-  <section className="tournament-section">          
+  <section className="groups-section">          
 
         <div className="section-title">Fase de Grupos</div>
 
@@ -232,7 +232,7 @@ useEffect(() => {
         </div>
   </section>
 {/* --- --------------------------------Tarjeta de Fase Eliminatoria (Llaves) ----------------------------- */}
-          <section className="tournament-section">
+          <section className="final-section">
             <h2 className="section-title">Fase Eliminatoria (Llaves)</h2>
             <div className="bracket-view">
               {['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'FINAL'].map(phase => {

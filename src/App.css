@@ -99,8 +99,8 @@ header h1 span {
   gap: 0.5rem;
   
 }
-.today-card {
-background: var(--card-bg);
+.today-card {  
+  background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 0.5rem;
