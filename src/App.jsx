@@ -130,7 +130,7 @@ useEffect(() => {
   const knockoutMatches = getKnockoutMatches();
   const partidosDeHoy = getPartidosDeHoy();
   const resolucion = window.innerWidth;
-  console.log("Ancho lógico:", resolucion);
+  
   return (
     <div className="app-container">
       <header>
