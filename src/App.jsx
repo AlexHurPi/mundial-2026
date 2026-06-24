@@ -129,7 +129,8 @@ useEffect(() => {
   const groups = getGroupMatches();
   const knockoutMatches = getKnockoutMatches();
   const partidosDeHoy = getPartidosDeHoy();
-  console.log("Ancho lógico:", window.innerWidth);
+  const resolucion = window.innerWidth;
+  console.log("Ancho lógico:", resolucion);
   return (
     <div className="app-container">
       <header>
@@ -142,6 +143,7 @@ useEffect(() => {
       {!loading && !error && partidosDeHoy.length > 0 && (
         <section className="today-section">
           <h2 className="section-title">Partidos de Hoy</h2>
+          <h6 className="section-subtitle">{resolucion}</h6>
          {/* <AnuncioAdsense /> ANUNCIOS DE ADSENSE*/}
           <div className="today-grid">
             {partidosDeHoy.map(match => (
