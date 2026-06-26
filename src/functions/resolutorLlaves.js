@@ -67,7 +67,7 @@ const partidos16avos = [
     },
     {
         hora: "3 jul, 13:00",
-        home: "2º Grupo D",
+        home: "Australia",
         away: "2º Grupo G"
     },
     {
