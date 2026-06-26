@@ -5,26 +5,7 @@ import { useState, useEffect } from 'react';
 export const resolverNombreFinales = (match, type) => {
     const hora = match;
 
-// Dentro de tu función principal App() o donde administres los estados globales:
-const [cruces16avos, setCruces16avos] = useState({});
 
-useEffect(() => {
-    const obtenerCruces16avos = async () => {
-        try {
-            const response = await fetch('https://project-bqjnu.vercel.app/api/16avos');
-            if (response.ok) {
-                const data = await response.json();
-                setCruces16avos(data);
-            }
-        } catch (err) {
-            console.error("Error cargando los cruces de 16avos:", err);
-        }
-    };
-
-    obtenerCruces16avos();
-}, []);
-
-console.log("Cruces de 16avos:", cruces16avos);
 
 
 
