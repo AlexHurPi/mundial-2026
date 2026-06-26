@@ -17,7 +17,7 @@ const partidos16avos = [
     },
     {
         hora: "29 jun, 20:00",
-        home: "1º Grupo F",
+        home: "Paises bajos",
         away: "Marruecos"
     },
     {
