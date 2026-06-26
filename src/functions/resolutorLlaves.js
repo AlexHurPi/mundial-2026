@@ -8,7 +8,7 @@ const partidos16avos = [
     {
         hora: "29 jun, 12:00",
         home: "Brasil",
-        away: "2º Grupo F"
+        away: "Japon"
     },
     {
         hora: "29 jun, 15:30",
