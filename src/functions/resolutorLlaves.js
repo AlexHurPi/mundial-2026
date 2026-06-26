@@ -23,11 +23,11 @@ const partidos16avos = [
     {
         hora: "30 jun, 12:00",
         home: "Costa de Marfil",
-        away: "2º Grupo I"
+        away: "Noruega"
     },
     {
         hora: "30 jun, 16:00",
-        home: "1º Grupo I",
+        home: "Francia",
         away: "3º Grupo C/D/F/G/H"
     },
     {
