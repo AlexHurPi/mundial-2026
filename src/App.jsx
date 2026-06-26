@@ -3,6 +3,7 @@ import { diccionarioEquipos } from './diccionario.js';
 import { nombresFases } from './diccionario.js';
 import { GroupCard }  from './components/GroupCard.jsx';
 import { AnuncioAdsense } from './components/AnuncioAdsense.jsx';
+import { resolverNombreFinales } from '../src/functions/resolutorLlaves.js'; // <- NUEVA IMPORTACIÓN
 import './App.css';
 
 function App() {
@@ -235,36 +236,62 @@ useEffect(() => {
   </section>
 {/* --- -------------------------------------------------------FINALES --------------------------------------- */}
           <section className="final-section">
-            <h2 className="section-title">FINALES</h2>
-            <div className="bracket-view">
-              {['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'FINAL'].map(phase => {
-                const phaseMatches = knockoutMatches.filter(m => m.stage === phase);
-                if (phaseMatches.length === 0) return null;
+  <h2 className="section-title">FINALES</h2>
+  <div className="bracket-view">
+    {['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'FINAL'].map(phase => {
+      const phaseMatches = knockoutMatches.filter(m => m.stage === phase);
+      if (phaseMatches.length === 0) return null;
 
-                return (
-                  <div key={phase} className="phase-column">
-                    {/* MODIFICADO: Usa el diccionario para mostrar nombres en español */}
-                    <h3 className="phase-title">{nombresFases[phase] || phase}</h3>
-                    {phaseMatches.map(match => (
-                      <div key={match.id} className="knockout-card">
-                        <div className="match-details" style={{textAlign: 'center', marginBottom: '8px'}}>
-                           {formatearFecha(match.utcDate)}
-                        </div>
-                        <div className="team-row">
-                          <span>{obtenerNombreEquipo(match.homeTeam)}</span>
-                          <strong>{match.score?.fullTime?.home ?? 'Por definir-'}</strong>
-                        </div>
-                        <div className="team-row">
-                          <span>{obtenerNombreEquipo(match.awayTeam)}</span>
-                          <strong>{match.score?.fullTime?.away ?? 'Por definir-'}</strong>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
+      return (
+        <div key={phase} className="phase-column">
+          <h3 className="phase-title">{nombresFases[phase] || phase}</h3>
+          
+          {phaseMatches.map(match => (
+            
+          <div className="knockout-card" key={match.id}>
+            <div className="match-details" style={{textAlign: 'center', marginBottom: '8px'}}>
+                                    {formatearFecha(match.utcDate)}
             </div>
-          </section>
+
+              {/* Fila del Equipo Local (Home) */}
+              <div className="team-row">
+                <div className="team">
+                  <img 
+                    src={match.homeTeam?.crest} 
+                    alt="crest" 
+                    className="crest" 
+                    onError={(e) => { e.target.style.display = 'none'; }} // Oculta la imagen si viene en null o rompe
+                  />
+                  <span className="team-name2">{obtenerNombreEquipo(match.homeTeam)?? resolverNombreFinales(formatearFecha(match.utcDate), "home")}</span>
+                </div>
+                <span className="score-value">
+                  {match.score?.fullTime?.home !== null ? match.score.fullTime.home : '-'}
+                </span>
+              </div>
+
+              {/* Fila del Equipo Visitante (Away) */}
+              <div className="team-row">
+                <div className="team">
+                  <img 
+                    src={match.awayTeam?.crest} 
+                    alt="crest" 
+                    className="crest" 
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                  <span className="team-name2">{obtenerNombreEquipo(match.awayTeam)?? resolverNombreFinales(formatearFecha(match.utcDate), "away")}</span>
+                </div>
+                <span className="score-value">
+                  {match.score?.fullTime?.away !== null ? match.score.fullTime.away : '-'}
+                </span>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      );
+    })}
+  </div>
+</section>
         </>
       )}
     </div>

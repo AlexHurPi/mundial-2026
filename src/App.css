@@ -241,6 +241,25 @@ header h1 span {
   word-wrap: break-word; 
   font-size: 0.9rem;
 }
+.team-name2 {
+  font-weight: 600;
+  
+  /* 1. Cambiamos 'nowrap' por 'normal' para permitir el salto de línea */
+  white-space: normal; 
+  
+  /* 2. Ajustamos el espacio entre las líneas para que no se vea tan separado */
+  line-height: 1.2; 
+  
+  /* 3. Centramos el texto (muy útil si el nombre queda en dos renglones) */
+  text-align: center; 
+  
+  /* 4. (Opcional) Le damos un ancho máximo para forzar el salto en pantallas pequeñas */
+  max-width: 10rem; 
+  
+  /* 5. Asegura que palabras muy largas no rompan la caja */
+  
+  font-size: 0.9rem;
+}
 .score-box input:focus {
   outline: none;
   border-color: var(--accent);
