@@ -52,7 +52,7 @@ const partidos16avos = [
     },
     {
         hora: "2 jul, 14:00",
-        home: "1º Grupo H",
+        home: "España",
         away: "2º Grupo J"
     },
     {
@@ -73,7 +73,7 @@ const partidos16avos = [
     {
         hora: "3 jul, 17:00",
         home: "Argentina",
-        away: "2º Grupo H"
+        away: "Cabo verde"
     },
     {
         hora: "3 jul, 20:30",
