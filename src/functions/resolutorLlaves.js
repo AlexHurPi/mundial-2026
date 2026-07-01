@@ -79,6 +79,11 @@ const partidos16avos = [
         hora: "3 jul, 20:30",
         home: "1º Grupo K",
         away: "3º Grupo D/E/I/J/L"
+    },
+    {
+        hora: "4 jul, 16:00",
+        
+        away: "Francia"
     }
 ];
 
